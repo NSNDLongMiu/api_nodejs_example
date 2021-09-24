@@ -4,11 +4,11 @@ const util = require('util')
 const mysql = require('mysql')
 const db = require('./../db')
 
-const table = 'users'
+const table = 'event'
 
 module.exports = {
     get: (req, res) => {
-        let sql = 'SELECT * FROM users'
+        let sql = 'SELECT * FROM event'
         db.query(sql, (err, response) => {
             if (err) throw err
             res.json(response)
@@ -54,14 +54,12 @@ module.exports = {
         let data = req.body;
         let sql = `SELECT * FROM users WHERE email = '${data.email}'`
         db.query(sql, (err, response) => {
-            if (err) throw err
-            if(response == ''){
-                res.send({success: 2 })
-            } else if( response[0].email == data.email && response[0].password == data.password ){
-                res.send({data: response[0], success: 1 })
+            if (err) throw err           
+            if( response[0].email == data.email && response[0].password == data.password ){
+                res.send({data: response[0], success: "1" })
             }
             else {
-                res.send({success: 0 })
+                console.log('fail')
             }
         })
     }
